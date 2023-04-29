@@ -106,7 +106,7 @@ h3 {
 	/* border: 1px solid red; */
 }
 
-section p {
+section p{
 	margin: auto;
 	margin-top: 10px;
 	margin-left: 20px;
@@ -114,12 +114,22 @@ section p {
 	font-size: 20px;
 }
 
+p[name="desc"]{
+	margin-left: 60px;
+}
+
 input:not(input[name="calc"], input[name="res"]) {
 	width: 80%;
 	margin: auto;
-	margin-left: 20px;
+	margin-left: 40px;
 	height: 30px;
-	border-radius: 2px;
+	border-radius: 20px;
+	border: 3px solid rgb(231, 166, 62);
+	background-color: rgb(42, 38, 65);
+	color: rgb(248, 253, 220);
+	font-family: "Lobster";
+	font-size: 20px;
+	text-align: center;
 }
 
 input[name="calc"] {
@@ -132,6 +142,7 @@ input[name="calc"] {
 	font-family: "Rubik Iso";
 	font-weight: 5px;
 	font-size: 30px;
+	border-radius: 10px;
 
 	/* BUILDING */
 	/* border: 3px solid green; */

@@ -24,6 +24,5 @@ function calculate(){
 	tip /= 100;
 	tip *= parseInt(bill);
 	res = parseFloat(bill) + parseFloat(tip);
-	alert(res);
 	document.querySelector('#ress').innerHTML = res;
 }
