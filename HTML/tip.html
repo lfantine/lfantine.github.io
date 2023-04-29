@@ -2,15 +2,30 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>lfantine Portfolio</title>
+		<title>tip calculator</title>
 		<link rel="stylesheet" href="../CSS/tip.css">
 		<link href="https://fonts.googleapis.com/css?family=Sigmar:400,700,800" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Teko:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lobster:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Asap:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Kalam:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Rubik Iso:400,700,800" rel="stylesheet">
 	</head>
 	<body>
 		<header>
 			<span name="back"><a href="../index.html"><div><p name="back-text">HOME</p></div></a></span>
 			<div name="title"><p>TIP TOOLS</p></div>
 		</header>
+		<hr>
+		<section name="window">
+			<h3>Tip Calculator</h3>
+			<p>Enter the bill amount and tip percentage to calculate the total.</p>
+			<label name="bill"><p name="amount">Bill amount: </p><input type="number" placeholder="0" name="bill" id="bil"></label>
+			<label name="tip"><p name="amount">Tip percentage: </p><input type="number" placeholder="0" name="bill" id="tips"></label>
+			<input type="submit" value="CALCULATE" name="calc" id="but">
+			<!-- <hr name="hres"> -->
+			<label name="result"><p name="res">Result : <span id="ress">0</span></p></label>
+		</section>
+		<script type="text/javascript" src="../JS/tip.js"></script>
 	</body>
 </html>

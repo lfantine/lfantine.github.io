@@ -14,6 +14,10 @@ body header {
 	/* background-color: rgb(55, 50, 85); */
 }
 
+hr {
+	width: 80%;;
+}
+
 a:visited {
 	color: black;
 }
@@ -34,6 +38,7 @@ span[name="back"] div{
 	height: 50%;
 	background-color: rgb(55, 50, 85);
 	width: 70%;
+	min-width: 100px;
 	border-radius: 20px;
 	border: 3px solid rgb(255, 187, 0);
 	box-shadow: 0px 0px 4px rgb(255, 187, 0);
@@ -66,11 +71,91 @@ div[name="title"] {
 	/* border: 1px solid green; */
 }
 div[name="title"] p {
-	margin: 0 auto;
+	margin: 0 0 0 0;
 	text-align: center;
+	width: 80%;
+	font-size: 110px;
+	color: rgb(95, 86, 146);
+	text-shadow: 4px 4px 3px rgb(231, 166, 62);
+	font-family: "Teko";
 
 	/* BUILDING */
 	/* border: 1px solid red; */
 }
 
 /* BASE + BACK */
+
+section[name="window"] {
+	width: 650px;
+	height: 500px;
+	margin: auto;
+	margin-top: 60px;
+	border: 3px solid rgb(255, 187, 0);
+	border-radius: 30px;
+	background-color: rgb(55, 50, 85);
+	font-family: "Lobster";
+}
+
+h3 {
+	margin: auto;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 60px;
+
+	/* BUILDING */
+	/* border: 1px solid red; */
+}
+
+section p {
+	margin: auto;
+	margin-top: 10px;
+	margin-left: 20px;
+	text-align: left;
+	font-size: 20px;
+}
+
+input:not(input[name="calc"], input[name="res"]) {
+	width: 80%;
+	margin: auto;
+	margin-left: 20px;
+	height: 30px;
+	border-radius: 2px;
+}
+
+input[name="calc"] {
+	width: 60%;
+	height: 60px;
+	margin: 30px auto 0 auto;
+	margin-left: 20%;
+	box-shadow: 4px 4px 3px rgb(231, 166, 62);
+	background-color: rgb(93, 69, 172);
+	font-family: "Rubik Iso";
+	font-weight: 5px;
+	font-size: 30px;
+
+	/* BUILDING */
+	/* border: 3px solid green; */
+}
+
+input[name="calc"]:hover {
+	background-color: rgb(146, 92, 204);
+}
+
+hr[name="hres"] {
+	margin-top: 30px;
+	background-color: rgb(93, 69, 172);
+	/* border: 3px solid rgb(93, 69, 172); */
+	border: 3px solid rgb(231, 166, 62);
+	box-shadow: 1px 1px black;
+	border-radius: 1px;
+}
+
+p[name="amount"] {
+	width: 60%;
+	font-size: 40px;
+}
+
+p[name="res"] {
+	width: 100%;
+	font-size: 40px;
+}
