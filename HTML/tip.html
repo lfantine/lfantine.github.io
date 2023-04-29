@@ -20,10 +20,12 @@
 		<section name="window">
 			<h3>Tip Calculator</h3>
 			<p name="desc">Enter the bill amount and tip percentage to calculate the total.</p>
-			<label name="bill"><p name="amount">Bill amount: </p><input type="number" placeholder="0" name="bill" id="bil"></label>
-			<label name="tip"><p name="amount">Tip percentage: </p><input type="number" placeholder="0" name="bill" id="tips"></label>
+			<label name="bill"><p name="amount">Bill amount: </p><input type="number" placeholder="0" name="bill" id="bil" min="0"></label>
+			<label name="tip"><p name="amount">Tip percentage: </p><input type="number" placeholder="0" name="bill" id="tips" min="0"></label>
 			<input type="submit" value="CALCULATE" name="calc" id="but">
 			<!-- <hr name="hres"> -->
+		</section>
+		<section name="res-window">
 			<label name="result"><p name="res">Result : <span id="ress">0</span></p></label>
 		</section>
 		<script type="text/javascript" src="../JS/tip.js"></script>
