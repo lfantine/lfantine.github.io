@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>tip calculator</title>
-		<link rel="stylesheet" href="../CSS/tip.css">
+		<link rel="stylesheet" href="../CSS/calcul.css">
 		<link href="https://fonts.googleapis.com/css?family=Sigmar:400,700,800" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Teko:400,700,800" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lobster:400,700,800" rel="stylesheet">
@@ -14,20 +14,15 @@
 	<body>
 		<header>
 			<span name="back"><a href="../index.html"><div><p name="back-text">HOME</p></div></a></span>
-			<div name="title"><p>TIP TOOLS</p></div>
+			<div name="title"><p> Calculator</p></div>
 		</header>
 		<hr>
 		<section name="window">
-			<h3>Tip Calculator</h3>
-			<p name="desc">Enter the bill amount and tip percentage to calculate the total.</p>
-			<label name="bill"><p name="amount">Bill amount: </p><input type="number" placeholder="0" name="bill" id="bil" min="0"></label>
-			<label name="tip"><p name="amount">Tip percentage: </p><input type="number" placeholder="0" name="bill" id="tips" min="0"></label>
-			<input type="submit" value="CALCULATE" name="calc" id="but">
-			<!-- <hr name="hres"> -->
+			<div class="screen">0123456789</div>
+			<section name="clavier">
+				<button type="button" name="C">
+			</section>
 		</section>
-		<section name="res-window">
-			<label name="result"><p name="res">Result : <span id="ress">0.00$</span></p></label>
-		</section>
-		<script type="text/javascript" src="../JS/tip.js"></script>
+		<script type="text/javascript" src="../JS/calcul.js"></script>
 	</body>
 </html>
