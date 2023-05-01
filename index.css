@@ -4,6 +4,8 @@ body {
 	margin: 0;
 }
 
+/* ============== TOP BAR ======================== */
+
 #header {
 	display: flex;
 	justify-content: space-between;
@@ -51,14 +53,46 @@ header {
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
+	transition: 0.3s;
+}
+.H-elem:hover{
+	transform: scale(1.2) rotate(10deg);
 }
 
 .H-elem span{
 	height: 100%;
 	width: 100%;
 	color: beige;
+	font-family: "Lobster";
 }
 
+.H-burger{
+	width: 60px;
+	height: 60px;
+	background-color: rgba(0, 0, 0, 0.555);
+	border-radius: 10px;
+	margin: 20px auto;
+	padding: 5px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+
+	transition: 0.2s;
+}
+.H-burger:hover{
+	transform: scale(1.1);
+	background-color: rgb(0, 0, 0);
+}
+
+.B-elem{
+	height: 7px;
+	width: 40px;
+	background-color: rgba(255, 255, 255, 0.589);
+	border-radius: 10px;
+	margin: 0 auto;
+}
 
 h1[name="home-name"]{
 	font-size: 55px;
@@ -77,6 +111,31 @@ a {
 #lf:hover{
 	text-shadow: 0 0 4px rgb(199, 185, 163);
 }
+
+.bg {
+	display: none;
+}
+.t {
+	display: block;
+}
+
+@media screen and (max-width: 830px)
+{
+	.bg{
+		display: flex;
+	}
+	.t{
+		display: none;
+	}
+	header {
+		transform: scale(0.7);
+		margin-left: -40px;
+	}
+}
+
+
+/* =================  PAGE  ====================*/
+
 
 h2 {
 	width: 400px;
