@@ -1,6 +1,23 @@
 body {
 	/* background-color: rgb(19, 18, 26); */
 	background-color: rgb(29, 27, 49);
+	margin: 0;
+}
+
+#header {
+	display: flex;
+	justify-content: space-between;
+	
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: fit-content;
+	background: linear-gradient(180deg, rgb(29, 27, 49) 50%, rgba(29, 27, 49, 0.24) 100%);
+}
+
+#links{
+	display: flex;
+	gap: 50px;
 }
 
 header {
@@ -9,17 +26,38 @@ header {
 	border-radius: 10px;
 	width: 50%;
 	text-align: center;
-	margin: auto;
-	margin-top: 100px;
 	text-transform: uppercase;
-	display: flex;
-	justify-content: flex-end;
-	flex-direction: column;
-	gap: 50px;
 	min-width: fit-content;
 	max-width: 600px;
 	height: 10px;
+	
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+
+	transform: scale(0.6);
+
+	margin: 60px -70px;
 }
+
+.H-elem{
+	height: 40px;
+	width: fit-content;
+	/* border: 1px solid green; */
+	margin: 20px auto;
+	text-align: center;
+	font-size: 25px;
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+.H-elem span{
+	height: 100%;
+	width: 100%;
+	color: beige;
+}
+
 
 h1[name="home-name"]{
 	font-size: 55px;
@@ -63,6 +101,9 @@ h2 {
 	border-radius: 25px;
 	margin: 30px auto;
 }
+.divider:first-of-type{
+	margin-top: 200px;
+}
 
 section[name="course"] {
 	border: 2px solid rgb(255, 217, 0);
@@ -79,7 +120,7 @@ section[name="course"] {
 	flex-direction: column;
 	gap: 10px;
 
-	animation: slideUp 3s;
+	animation: slideUp 2s;
 }
 
 section[name="course"] div {
@@ -143,7 +184,7 @@ section[name="reseau"] {
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgb(255, 234, 47);
 
-	animation: appear 3s;
+	animation: appear 2s;
 }
 
 .reso:hover {
