@@ -1,7 +1,6 @@
 body {
 	/* background-color: rgb(19, 18, 26); */
 	background-color: rgb(29, 27, 49);
-	transition: 0.5s;
 }
 
 header {
@@ -79,6 +78,8 @@ section[name="course"] {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+
+	animation: slideUp 3s;
 }
 
 section[name="course"] div {
@@ -93,6 +94,7 @@ section[name="course"] div {
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
+
 }
 
 .logo {
@@ -141,12 +143,12 @@ section[name="reseau"] {
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgb(255, 234, 47);
 
-	transition: transform 0.5s ease 0s;
+	animation: appear 3s;
 }
 
 .reso:hover {
 	transform: scale(2);
-	box-shadow: 0 0 0px rgb(255, 234, 47);
+	box-shadow: 0 0 4px rgb(255, 234, 47);
 }
 
 .reso img {
@@ -154,9 +156,11 @@ section[name="reseau"] {
 	height: 100%;
 	object-fit: cover;
 	border-radius: 50%;
+	transition: all 1s;
 }
 .reso img:hover {
 	animation: rot 2s linear infinite;
+	transition: all 1s;
 }
 
 img[alt="youtube"] {
@@ -189,5 +193,28 @@ img[alt="youtube"] {
 	100%
 	{
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes slideUp{
+	0%{
+		transform: translateY(200px);
+		opacity: 0;
+	}
+	100%{
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes appear {
+	0%{
+		opacity: 0;
+	}
+	90%{
+		opacity: 0;
+	}
+	100%{
+		opacity: 1;
 	}
 }

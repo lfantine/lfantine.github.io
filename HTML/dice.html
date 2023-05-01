@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>tip calculator</title>
+		<link rel="stylesheet" href="../CSS/dice.css">
+		<link href="https://fonts.googleapis.com/css?family=Sigmar:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Teko:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lobster:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Asap:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Kalam:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Rubik Iso:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Oxygen:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Arvo:400,700,800" rel="stylesheet">
+	</head>
+	<body>
+		<header>
+			<div class="bord">
+				<div class="back" id="bbut" onclick="back()"><span id="bk">Back</span></div>
+			</div>
+		</header>
+		<div id="result"><span id="res">0</span></div>
+		<section id="window">
+			<div id="dice">
+				<div class="point" id="one"></div>
+				<div class="point" id="two"></div>
+				<div class="point" id="three"></div>
+				<div class="point" id="four"></div>
+				<div class="point" id="five"></div>
+				<div class="point" id="six"></div>
+				<div class="point" id="seven"></div>
+				<div class="point" id="eigth"></div>
+				<div class="point" id="nine"></div>
+			</div>
+			<hr>
+			<div id="play" onclick="launch()"><span id="play-txt" class="launchable">PLAY</span></div>
+			<div id="hist">
+				<span id="latest">Latest games :</span>
+			</div>
+		</section>
+		<script type="text/javascript" src="../JS/dice.js"></script>
+	</body>
+</html>

@@ -1,0 +1,238 @@
+body {
+	/* background-color: rgb(19, 18, 26); */
+	background-color: rgb(29, 27, 49);
+	margin: 0;
+}
+
+header {
+	height: 100px;
+	width: 100%;
+}
+
+/* <div onload="this.style.animation='spin2 4s linear infinite'">  */
+
+.back {
+	background-color: rgb(43, 39, 53);
+	height: 100%;
+	width: 100px;
+	border-radius: 20px;
+	text-align: center;
+	border: 2px solid rgb(216, 158, 0);
+	display: flex;
+	justify-content: center;
+}
+
+.bord {
+	height: 50px;
+	width: 120px;
+	margin: 25px 0 0 25px;
+	padding: 4px;
+	padding-bottom: 8px;
+	border-right: 5px solid rgb(216, 158, 0);
+	border-radius: 20px;
+}
+
+#bk {
+	margin: 0 auto;
+	height: 80%;
+	width: 80%;
+	font-size: 35px;
+	text-decoration: none;
+	color: rgb(247, 222, 154);
+	font-family: "Lobster";
+	border-bottom: 1px solid rgb(247, 222, 154);
+	transition: 0.5s;
+}
+
+#bk:hover {
+	border-bottom: 0px solid rgb(247, 222, 154);
+	transform: scale(1.2);
+}
+
+.bye {
+	animation: doBack 1.5s forwards;
+}
+
+@keyframes doBack {
+	0%{
+		transform: translateX(0);
+	}
+	80%{
+		transform: translateX(100px);
+	}
+	100%{
+		transform: translateX(-300px);
+	}
+}
+
+#window {
+	height: 600px;
+	width: 800px;
+	margin: auto;
+	margin-top: 150px;
+	/* border-right: 2px solid beige;
+	border-left: 2px solid beige; */
+}
+
+#dice {
+	width: 100px;
+	height: 100px;
+	border-radius: 10px;
+	border: 3px solid white;
+	background-color: beige;
+	margin: 0 auto;
+
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1px;
+}
+
+.point {
+	border-radius: 50%;
+	/* background-color: black; */
+	width: 25px;
+	height: 25px;
+	margin: auto;
+}
+
+.visible {
+	background-color: black;
+}
+
+#play {
+	width: 200px;
+	height: 60px;
+	margin: auto;
+	/* border: 2px solid rgb(255, 196, 0);
+	background-color: rgb(86, 0, 199); */
+	border-radius: 35px;
+
+	display: flex;
+	justify-content: center
+}
+
+.launchable{
+	background: linear-gradient(184deg, rgb(174, 154, 255),  rgb(91, 66, 255));
+}
+.blocked{
+	background: linear-gradient(184deg, rgb(77, 74, 87),  rgb(46, 46, 46));
+}
+
+
+#play-txt {
+	width: 165px;
+	height: 45px;
+	margin: auto;
+	border: 2px solid rgb(255, 196, 0);
+	border-radius: 35px;
+	text-align: center;
+	transition: 0.25s;
+	color: bisque;
+	font-family: "Rubik Iso";
+	font-size: 40px;
+
+}
+
+
+#play-txt:hover:not(.blocked){
+	transform: scale(1.2);
+}
+
+.clicked {
+	animation: clk 0.4s;
+}
+
+@keyframes clk{
+	0%{
+		transform: scale(1.2);
+	}
+	50%{
+		transform: scale(1);
+	}
+	100%{
+		transform: scale(1);
+	}
+}
+
+.role {
+	animation: role 1.5s linear forwards;
+}
+
+@keyframes role {
+	0%{
+		transform: translateY(-300px) rotate(-40deg);
+	}
+	30%{
+		transform: translateY(0) rotate(360deg);
+	}
+	45%
+	{
+		transform: translateY(-80px) rotate(-60deg);
+	}
+	50%{
+		transform: translateY(-100px) rotate(-90deg);
+	}
+	55%{
+		transform: translateY(-80px) rotate(-120deg);
+	}
+	70%{
+		transform: translateY(0) rotate(-180deg);
+	}
+	80%{
+		transform: translateY(-30px) rotate(-90deg);
+	}
+	100%{
+		transform: translateY(0) rotate(0deg);
+	}
+}
+
+#result {
+	border-radius: 5px;
+	border: 3px dashed rgb(112, 85, 156);
+	width: 110px;
+	height: 110px;
+	margin: auto;
+	margin-top: 50px;
+	text-align: center;
+}
+
+#result span{
+	width: 100%;
+	height: 100%;
+	font-size: 100px;
+	color: rgb(112, 85, 156);
+	margin: auto;
+	text-align: center;
+}
+
+#hist {
+	background-color: rgb(112, 85, 156);
+	height: fit-content;
+	min-height: 30px;
+	width: 600px;
+	margin: auto;
+	border-radius: 10px;
+	border: 1px solid rgb(206, 206, 187);
+	padding-bottom: 20px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#latest {
+	height: 60px;
+	width: 80%;
+	margin: auto;
+	font-size: 40px;
+	font-family: "Lobster";
+}
+
+.games {
+	height: 40px;
+	width: 95%;
+	margin: auto;
+	text-align: center;
+	font-size: 30px;
+	font-family: "Arvo";
+}
