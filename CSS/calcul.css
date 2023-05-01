@@ -115,7 +115,7 @@ div[name="clavier"] {
 	width: 525px;
 	height: 525px;
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 50px;
 
 	display: grid;
 	gap: 10px;
@@ -196,7 +196,8 @@ div[name="clavier"] {
 .equal {
 	grid-column: 4;
 	grid-row: 3 / 6;
-	background-color: rgb(125, 148, 95);
+	/* background-color: rgb(125, 148, 95); */
+	background-color: rgb(118, 95, 148);
 }
 .equal:hover{
 	background-color: rgb(145, 170, 112);
