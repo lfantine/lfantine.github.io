@@ -1,5 +1,7 @@
 body {
-	background-color: rgb(19, 18, 26);
+	/* background-color: rgb(19, 18, 26); */
+	background-color: rgb(29, 27, 49);
+	transition: 0.5s;
 }
 
 header {
@@ -15,7 +17,7 @@ header {
 	justify-content: flex-end;
 	flex-direction: column;
 	gap: 50px;
-	min-width: 300px;
+	min-width: fit-content;
 	height: 10px;
 }
 
@@ -25,6 +27,7 @@ h1[name="home-name"]{
 	padding: 0px 0px;
 	margin-bottom: -5px;
 	text-shadow: 3px 3px 2px rgb(129, 0, 0);
+	min-width: fit-content;
 }
 
 a {
@@ -65,8 +68,10 @@ h2 {
 section[name="course"] {
 	border: 2px solid rgb(255, 217, 0);
 	background-color: rgb(39, 36, 51);
-	min-height: 700px;
+	/* min-height: 700px; */
+	height: fit-content;
 	width: 600px;
+	padding: 30px 0px;
 	margin: auto;
 	border-radius: 30px;
 	box-shadow: 5px 5px 5px black;
@@ -79,7 +84,7 @@ section[name="course"] {
 section[name="course"] div {
 	width: 80%;
 	height: 70px;
-	background-color: rgb(19, 18, 26);
+	background: linear-gradient(184deg, rgb(39, 36, 51) 15%,  rgb(19, 18, 26));
 	margin: 10px auto;
 	border-bottom: 3px solid cornsilk;
 	border-radius: 10px 200px 10px 200px;
@@ -88,10 +93,6 @@ section[name="course"] div {
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
-}
-
-#tip {
-	margin-top: 40px;
 }
 
 .logo {
@@ -111,10 +112,81 @@ h3[name="title"] {
 	padding-top: 5px;
 	font-size: 40px;
 	text-shadow: 3px 3px 2px rgb(39, 13, 32);
+	transition: transform 0.5s ease 0s;
+}
+h3[name="title"]:hover {
+	transform: scale(1.1);
 }
 
 .a-proj:hover {
-	color: rgb(95, 59, 153);
+	color: rgb(218, 192, 114);
+}
+
+section[name="reseau"] {
+	/* min-height: 700px; */
+	height: fit-content;
+	width: fit-content;
+	padding: 30px 0px;
+	margin: auto;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 30px;
+}
+
+.reso {
+	width: 50px;
+	height: 50px;
+	background-color: rgb(0, 0, 0);
+	border-radius: 50%;
+
+	transition: transform 0.5s ease 0s;
+}
+
+.reso:hover {
+	transform: scale(2);
+}
+
+.reso img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+.reso img:hover {
+	animation: rot 2s linear infinite;
+}
+
+img[alt="youtube"] {
+	background-color: red;
 }
 
 /* ############ --- ANIMATION --- ############*/
+
+.link {
+	animation: link;
+}
+
+@keyframes link {
+	0%
+	{
+		transform: scale(2);
+		transform: rotate(0deg);
+	}
+	100%
+	{
+		transform: scale(5);
+		transform: rotate(720deg);
+	}
+}
+
+@keyframes rot{
+	0%{
+		transform: rotate(0deg);
+	}
+	100%
+	{
+		transform: rotate(360deg);
+	}
+}
