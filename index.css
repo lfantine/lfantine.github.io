@@ -3,7 +3,7 @@ body {
 }
 
 header {
-	border: 4px solid rgb(255, 217, 0);
+	border: 2px solid rgb(255, 217, 0);
 	background-color: rgb(39, 36, 51);
 	border-radius: 10px;
 	width: 50%;
@@ -16,13 +16,15 @@ header {
 	flex-direction: column;
 	gap: 50px;
 	min-width: 300px;
-	height: 25px;
+	height: 10px;
 }
 
 h1[name="home-name"]{
 	font-size: 55px;
 	font-family: "Sigmar", Verdana, Geneva, Tahoma, sans-serif;
 	padding: 0px 0px;
+	margin-bottom: -5px;
+	text-shadow: 3px 3px 2px rgb(129, 0, 0);
 }
 
 a {
@@ -44,6 +46,7 @@ h2 {
 	color: rgb(199, 185, 163);
 	text-shadow: 2px 2px 3px black;
 	font-family: "Teko", Verdana, Geneva, Tahoma, sans-serif;
+	/* text-shadow: 3px 3px 2px rgb(129, 0, 0); */
 }
 
 .cream {
@@ -108,7 +111,7 @@ h3[name="title"] {
 	padding-left: 30px;
 	padding-top: 5px;
 	font-size: 50px;
-	text-shadow: 1px 1px 4px rgb(24, 17, 0);
+	text-shadow: 3px 3px 2px rgb(75, 0, 0);
 }
 
 .a-proj:hover {
