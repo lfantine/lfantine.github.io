@@ -148,6 +148,7 @@ div[name="clavier"] {
 	margin: 3px;
 	font-size: 60px;
 	text-align: center;
+	width: 115px;
 }
 .button:hover{
 	background-color: rgb(119, 119, 134);
