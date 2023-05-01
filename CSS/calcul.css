@@ -97,7 +97,7 @@ section[name="window"] {
 	box-shadow: 0 0 10px rgb(44, 44, 44);
 }
 
-.screen {
+#screen {
 	width: 450px;
 	height: 75px;
 	background-color: azure;
@@ -110,10 +110,113 @@ section[name="window"] {
 	padding: 4px;
 }
 
-section[name="clavier"] {
+div[name="clavier"] {
 	width: 500px;
 	height: 500px;
-	border: 2px solid green;
 	margin: auto;
+	margin-top: 20px;
+
 	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 10px;
+}
+
+.button {
+	background-color: rgb(82, 82, 104);
+	box-shadow: 0 0 5px rgb(199, 199, 199);
+	border-radius: 10px;
+	margin: 3px;
+	font-size: 60px;
+	text-align: center;
+}
+.button:hover{
+	background-color: rgb(119, 119, 134);
+}
+
+.reset {
+	grid-column: 1;
+	grid-row: 1;
+	background-color: rgb(156, 99, 82);
+}
+.reset:hover{
+	background-color: rgb(197, 125, 103);
+}
+
+.divi:hover, .mult:hover, .plus:hover, .meno:hover{
+	background-color: rgb(138, 138, 194);
+}
+
+.divi {
+	grid-column: 2;
+	grid-row: 1;
+	background-color: rgb(104, 104, 161);
+}
+.mult {
+	grid-column: 3;
+	grid-row: 1;
+	background-color: rgb(104, 104, 161);
+}
+.meno {
+	grid-column: 4;
+	grid-row: 1;
+	background-color: rgb(104, 104, 161);
+}
+.seven {
+	grid-column: 1;
+	grid-row: 2;
+}
+.eight {
+	grid-column: 2;
+	grid-row: 2;
+}
+
+.nine {
+	grid-column: 3;
+	grid-row: 2;
+}
+.plus {
+	grid-column: 4;
+	grid-row: 2;
+	background-color: rgb(104, 104, 161);
+}
+.four {
+	grid-column: 1;
+	grid-row: 3;
+}
+.five {
+	grid-column: 2;
+	grid-row: 3;
+}
+.six {
+	grid-column: 3;
+	grid-row: 3;
+}
+.equal {
+	grid-column: 4;
+	grid-row: 3 / 6;
+	background-color: rgb(125, 148, 95);
+}
+.equal:hover{
+	background-color: rgb(145, 170, 112);
+}
+.one {
+	grid-column: 1;
+	grid-row: 4;
+}
+.two {
+	grid-column: 2;
+	grid-row: 4;
+}
+.three {
+	grid-column: 3;
+	grid-row: 4;
+}
+.zero {
+	grid-column: 1;
+	grid-row: 5;
+}
+.dot {
+	grid-column: 2;
+	grid-row: 5;
 }

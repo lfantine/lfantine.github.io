@@ -18,10 +18,26 @@
 		</header>
 		<hr>
 		<section name="window">
-			<div class="screen">0123456789</div>
-			<section name="clavier">
-				<button type="button" name="C">
-			</section>
+			<div id="screen">0</div>
+			<div name="clavier" class="clv">
+				<button class="button reset" onclick="calc('C')">C</button>
+				<button class="button one" onclick="calc('1')">1</button>
+				<button class="button two" onclick="calc('2')">2</button>
+				<button class="button three" onclick="calc('3')">3</button>
+				<button class="button four" onclick="calc('4')">4</button>
+				<button class="button five" onclick="calc('5')">5</button>
+				<button class="button six" onclick="calc('6')">6</button>
+				<button class="button seven" onclick="calc('7')">7</button>
+				<button class="button eight" onclick="calc('8')">8</button>
+				<button class="button nine" onclick="calc('9')">9</button>
+				<button class="button zero" onclick="calc('0')">0</button>
+				<button class="button plus" onclick="calc('+')">+</button>
+				<button class="button meno" onclick="calc('-')">-</button>
+				<button class="button mult" onclick="calc('*')">*</button>
+				<button class="button divi" onclick="calc('/')">/</button>
+				<button class="button dot" onclick="calc('.')">.</button>
+				<button class="button equal" onclick="calc('=')">=</button>
+			</div>
 		</section>
 		<script type="text/javascript" src="../JS/calcul.js"></script>
 	</body>
