@@ -17,7 +17,7 @@ body {
 
 #links{
 	display: flex;
-	gap: 50px;
+	gap: 40px;
 }
 
 header {
@@ -47,7 +47,7 @@ header {
 	/* border: 1px solid green; */
 	margin: 20px auto;
 	text-align: center;
-	font-size: 30px;
+	font-size: 25px;
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
