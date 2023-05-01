@@ -127,6 +127,7 @@ section[name="window"] {
 div[name="clavier"] {
 	width: 525px;
 	height: 525px;
+	max-width: 525px;
 	margin: auto;
 	margin-top: 50px;
 
