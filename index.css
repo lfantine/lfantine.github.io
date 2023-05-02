@@ -130,14 +130,16 @@ a {
 	position: absolute;
 	top: 100px;
 	/* width: 200px; */
-	width: 100%;
+	width: 90%;
 	height: 800px;
 	background-color: rgb(18, 17, 31);
-	transition: 1s;
 	display: flex;
 	flex-direction: column;
-	gap: 60px;
+	gap: 70px;
 	transition: 0.2s;
+	border-radius: 25px;
+	box-shadow: 0 0 10px rgb(255, 217, 0);
+	left: 5%;
 }
 .other-pos {
 	opacity: 0;
@@ -157,7 +159,7 @@ a {
 	width: 100%;
 	height: 100%;
 	color: wheat;
-	font-size: 30px;
+	font-size: 40px;
 	font-family: "Sigmar";
 	text-align: center;
 	margin: auto;
@@ -177,7 +179,7 @@ a {
 	width: 100%;
 	height: 100%;
 	color: white;
-	font-size: 20px;
+	font-size: 30px;
 	font-family: "Sigmar";
 	text-align: center;
 	margin: auto;
@@ -250,7 +252,7 @@ section[name="course"] {
 	flex-direction: column;
 	gap: 10px;
 
-	animation: slideUp 2s;
+	animation: slideUp 1s;
 }
 
 section[name="course"] div {
@@ -314,7 +316,7 @@ section[name="reseau"] {
 	border-radius: 50%;
 	box-shadow: 0 0 10px rgb(255, 234, 47);
 
-	animation: appear 2s;
+	animation: appear 1s;
 }
 
 .reso:hover {
