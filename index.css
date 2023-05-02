@@ -134,15 +134,17 @@ a {
 	height: 800px;
 	background-color: rgb(18, 17, 31);
 	transition: 1s;
+	display: flex;
 	flex-direction: column;
 	gap: 60px;
+	transition: 0.2s;
 }
 .other-pos {
-	display: none;
+	opacity: 0;
 }
 
 .abs{
-	display: flex;
+	opacity: 1;
 }
 
 #bg-menu {
@@ -166,7 +168,7 @@ a {
 	height: 30px;
 	display: flex;
 	justify-content: center;
-	transition: 0.4s;
+	transition: 0.1s;
 }
 .bg-panel-elem:hover{
 	transform: scale(1.5);
@@ -187,7 +189,7 @@ a {
 	}
 }
 
-@media screen and (max-width: 830px)
+@media screen and (max-width: 1050px)
 {
 	.bg{
 		display: flex;
