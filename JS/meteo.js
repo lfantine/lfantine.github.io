@@ -95,8 +95,6 @@ function make_isday(is){
 	}
 }
 
-base_pos
-
 function Affichage(){
 fetch(url)
 .then(reponse => reponse.json())
