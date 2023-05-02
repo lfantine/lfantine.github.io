@@ -22,7 +22,7 @@
 		<section id="panel">
 			<div id="search">
 				<label for="srch-but">Rechercher une ville : <input id="srch-but" placeholder="Nice" type="text" min="3"></label>
-				<div id="sub"><input id="send" type="submit" value="CHERCHER" onclick="search()"></div>
+				<div id="sub"><input id="send" type="submit" value="🔎" onclick="search()"></div>
 				<div></div>
 			</div>
 			<section id="location" class="case">
@@ -50,7 +50,15 @@
 			</section>
 			<section id="condition" class="case">
 				<h3 class="case-title">condition :</h3>
-				
+				<div id="cond-info">
+					<div id="weath-day">
+						<div class="img-cont"><label class="w-tit">Weather</label><img class="small" id="WEATHER" src="http://cdn.weatherapi.com/weather/64x64/day/116.png"><label class="w-info" id="WEATHER-TXT">Weather</label></div>
+						<div class="img-cont"><label class="w-tit">Weather</label><img class="small" id="ISDAY" src="http://cdn.weatherapi.com/weather/64x64/day/116.png"><label class="w-info" id="ISDAY-TXT">Weather</label></div>
+						<div class="img-cont"><label class="w-tit">Weather</label><img class="small" id="WIND" src="../CONTENT/wind-dir.png"><label class="w-info" id="WIND-TXT">Weather</label></div>
+					</div>
+						<div id="map">
+						</div>
+				</div>
 			</section>
 			<div class="spacer"></div>
 		</section>

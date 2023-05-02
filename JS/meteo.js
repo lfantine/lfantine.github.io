@@ -32,7 +32,7 @@ function search() {
 	Affichage();
 }
 
-const data = {"location":{"name":"Nice","region":"Provence-Alpes-Cote d'Azur","country":"France","lat":43.7,"lon":7.25,"tz_id":"Europe/Paris","localtime_epoch":1683031561,"localtime":"2023-05-02 14:04"},"current":{"last_updated_epoch":1683030600,"last_updated":"2023-05-02 14:30","temp_c":19.0,"temp_f":66.2,"is_day":1,"condition":{"text":"Partly cloudy","icon":"//cdn.weatherapi.com/weather/64x64/day/116.png","code":1003},"wind_mph":11.9,"wind_kph":19.1,"wind_degree":200,"wind_dir":"SSW","pressure_mb":1013.0,"pressure_in":29.91,"precip_mm":0.0,"precip_in":0.0,"humidity":73,"cloud":25,"feelslike_c":19.0,"feelslike_f":66.2,"vis_km":10.0,"vis_miles":6.0,"uv":5.0,"gust_mph":11.2,"gust_kph":18.0}};
+// const data = {"location":{"name":"Nice","region":"Provence-Alpes-Cote d'Azur","country":"France","lat":43.7,"lon":7.25,"tz_id":"Europe/Paris","localtime_epoch":1683031561,"localtime":"2023-05-02 14:04"},"current":{"last_updated_epoch":1683030600,"last_updated":"2023-05-02 14:30","temp_c":19.0,"temp_f":66.2,"is_day":1,"condition":{"text":"Partly cloudy","icon":"//cdn.weatherapi.com/weather/64x64/day/116.png","code":1003},"wind_mph":11.9,"wind_kph":19.1,"wind_degree":200,"wind_dir":"SSW","pressure_mb":1013.0,"pressure_in":29.91,"precip_mm":0.0,"precip_in":0.0,"humidity":73,"cloud":25,"feelslike_c":19.0,"feelslike_f":66.2,"vis_km":10.0,"vis_miles":6.0,"uv":5.0,"gust_mph":11.2,"gust_kph":18.0}};
 
 function make_month(m){
 	switch(m){
@@ -82,11 +82,26 @@ function make_dTime(value){
 		return value;
 }
 
+function make_isday(is){
+	if (is)
+	{
+		document.getElementById('ISDAY-TXT').textContent = "DAY";
+		return "../CONTENT/day.png";
+	}
+	else
+	{
+		document.getElementById('ISDAY-TXT').textContent = "NIGHT";
+		return "../CONTENT/night.png";
+	}
+}
+
+base_pos
+
 function Affichage(){
-// fetch(url)
-// .then(reponse => reponse.json())
-// .then(data => {
-// 	console.table(data);
+fetch(url)
+.then(reponse => reponse.json())
+.then(data => {
+	console.table(data);
 	document.getElementById('VILLE').textContent = data.location.name;
 	document.getElementById('REGION').textContent = data.location.region;
 	document.getElementById('PAYS').textContent = data.location.country;
@@ -97,5 +112,10 @@ function Affichage(){
 	document.getElementById('DAY').textContent = parseInt(date_heure.substring(8, 10));
 	document.getElementById('T-HOUR').textContent = make_dTime(parseInt(date_heure.substring(11, 13)));
 	document.getElementById('T-MIN').textContent = make_dTime(parseInt(date_heure.substring(14, 16)));
-// });
+	document.getElementById('WEATHER').src = "http:" + data.current.condition.icon;
+	document.getElementById('WEATHER-TXT').textContent = data.current.condition.text;
+	document.getElementById('ISDAY').src = make_isday(data.current.is_day);
+	document.getElementById('WIND-TXT').textContent = data.current.wind_kph + "K/h";
+	document.getElementById('map').innerHTML = `<iframe class="item large" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=${data.location.lat},${data.location.lon}&hl=fr&z=14&amp;output=embed"> </iframe>`;
+});
 }
