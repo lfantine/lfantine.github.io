@@ -11,32 +11,37 @@ function link(id){
 
 // let screen_big = '<div class="H-elem"><span ></span></div><div class="H-elem"><span >42 Projects</span></div><div class="H-elem"><span>Projects</span></div><div class="H-elem"><span>About</span></div><div class="H-elem"><span>Contact</span></div><div class="H-elem"><span ></span></div>"';
 // let screen_small = '<div class="H-elem"><span ></span></div><div class="H-burger" onClick="toggle_burger()"><div class="B-elem"></div><div class="B-elem"></div><div class="B-elem"></div></div><div class="H-elem"><span ></span></div>';
-// let toggle_B = false;
 
 // window.onload = () => {
-// 	resize();
-// }
-
-// function resize() {
-// 	let top = document.getElementById('links');
-// 	if(document.documentElement.clientWidth <= 830)
-// 	{
-// 		top.innerHTML = screen_small;
-// 		return;
+	
 // 	}
-// 	else
-// 	{
-// 		if(toggle_B)
-// 			toggle_burger();
-// 		top.innerHTML = screen_big;
+	
+// 	function resize() {
+// 			if(document.documentElement.clientWidth <= 830)
+// 			{
+// 					return;
+// 				}
+// 				else
+// 				{
+// 						if (toggle_B)
+// 						{
+// 								toggle_burger();
+// 		}
 // 	}
 // }
 
-// window.onresize = () => {
-// 	resize();
-// }
+window.onresize = () => {
+	if (toggle_B)
+		toggle_burger();
+}
 
+let toggle_B = false;
+	
 function toggle_burger(){
 	toggle_B = !toggle_B;
-	alert(toggle_B);
+	const nav = document.getElementById('burger-panel');
+	nav.classList.remove('abs');
+	if (toggle_B == true){
+		nav.classList.add('abs');
+	}
 }
