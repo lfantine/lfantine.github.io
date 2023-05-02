@@ -112,13 +112,6 @@ a {
 	text-shadow: 0 0 4px rgb(199, 185, 163);
 }
 
-.bg {
-	display: none;
-}
-.t {
-	display: block;
-}
-
 .bg-hr{
 	width: 80%;
 	height: 3px;
@@ -136,19 +129,19 @@ a {
 	/* display: flex; */
 	flex-direction: column;
 	gap: 70px;
-	transition: 0.2s;
+	transition: 0.4s;
 	border-radius: 25px;
 	box-shadow: 0 0 10px rgb(255, 217, 0);
 	left: 5%;
 }
 .other-pos {
-	opacity: 0;
 	display: none;
+	opacity: 0;
 }
 
 .abs{
-	opacity: 1;
 	display: flex;
+	opacity: 1;
 }
 
 #bg-menu {

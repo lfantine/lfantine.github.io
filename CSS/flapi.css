@@ -1,0 +1,36 @@
+#game-logo {
+	width: 90%;
+	height: 250px;
+	/* background-color: aliceblue; */
+	margin: auto 45px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 40px;
+}
+
+
+#game-desc {
+	font-family: "Josefin Sans";
+	font-size: 25px;
+	color: aliceblue;
+	height: 100%;
+	width: 400px;
+}
+#game-desc h3{
+	font-size: 50px;
+}
+
+/* =============---------GAMES--------============== */
+
+#game-window {
+	width: 760px;
+	height: 840px;
+	margin: 40px auto;
+	text-align: center;
+}
+
+#board {
+	background-color: skyblue;
+	background-image: url('../CONTENT/flappy-bird/flappybirdbg.png');
+}
