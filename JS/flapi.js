@@ -116,6 +116,7 @@ function restart(){
 	birdX = boardwidth/8;
 	birdY = boardheight/2;
 	velocityY = 0;
+	score = 0;
 	launch_game();
 }
 
