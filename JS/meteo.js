@@ -18,7 +18,7 @@ function back(){
 // Meteo
 
 let ville = "Nice";
-let url = `http://api.weatherapi.com/v1/current.json?key=50cf9239a41d43b7a8f222429230105&q=${ville}&aqi=no`;
+let url = `https://api.weatherapi.com/v1/current.json?key=50cf9239a41d43b7a8f222429230105&q=${ville}&aqi=no`;
 
 window.onload = () => {
 	Affichage();
@@ -28,7 +28,7 @@ function search() {
 	let city = document.getElementById('srch-but').value;
 	if (city.length <= 1)
 		return ;
-	url = `http://api.weatherapi.com/v1/current.json?key=50cf9239a41d43b7a8f222429230105&q=${city}&aqi=no`;
+	url = `https://api.weatherapi.com/v1/current.json?key=50cf9239a41d43b7a8f222429230105&q=${city}&aqi=no`;
 	Affichage();
 }
 
