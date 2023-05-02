@@ -106,12 +106,12 @@ function start_game(){
 function restart(){
 	document.removeEventListener("keydown", movebird);
 	document.removeEventListener("click", movebirdCl);
+	clearInterval(interval);
+	cancelAnimationFrame(requestId);
 	while (pipeArray.length > 0)
 	{
 		pipeArray.shift();
 	}
-	clearInterval(interval);
-	cancelAnimationFrame(requestId);
 	context.clearRect(0, 0, boardwidth, boardheight);
 	birdX = boardwidth/8;
 	birdY = boardheight/2;

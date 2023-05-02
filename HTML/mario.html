@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>My Mario Bros</title>
+		<link rel="stylesheet" href="../CSS/proj-header.css">
+		<link rel="stylesheet" href="../CSS/mario.css">
+		<link href="https://fonts.googleapis.com/css?family=Sigmar:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Teko:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lobster:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Asap:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Kalam:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Rubik Iso:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Oxygen:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Arvo:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Josefin Sans:400,700,800" rel="stylesheet">
+	</head>
+	<body>
+		<header>
+			<div class="bord">
+				<div class="back" id="bbut" onclick="back()"><span id="bk">Back</span></div>
+			</div>
+		</header>
+		<div id="game-logo">
+			<img alt="game logo" src="../CONTENT/mario_.jpg">
+			<div id="game-desc">
+				<h3>Mario Bros</h3>
+				<p>A game where you play a plumber and need to go to the end of each level to save the princess and win.</p>
+			</div>
+		</div>
+		<section id="game-window">
+			<div id="start" onclick="launch_game()">START</div>
+			<canvas id="board" class="no"></canvas>
+		</section>
+		<script type="text/javascript" src="../JS/mario.js"></script>
+	</body>
+</html>
+

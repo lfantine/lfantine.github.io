@@ -1,0 +1,52 @@
+#game-logo {
+	width: 90%;
+	height: 250px;
+	/* background-color: aliceblue; */
+	margin: auto 45px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 40px;
+}
+
+
+#game-desc {
+	font-family: "Josefin Sans";
+	font-size: 25px;
+	color: aliceblue;
+	height: 100%;
+	width: 400px;
+}
+#game-desc h3{
+	font-size: 50px;
+}
+
+/* =============---------GAMES--------============== */
+
+.no {
+	display: none;
+}
+
+#board {
+	background-color: black;
+}
+
+#game-window {
+	text-align: center;
+	margin-top: 100px;
+}
+
+#start {
+	background: linear-gradient(90deg, rgb(132, 0, 255) 25%, rgb(0, 158, 150));
+	width: 200px;
+	height: 50px;
+	border-radius: 50px;
+	font-size: 40px;
+	margin: auto;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	border: 3px solid wheat;
+}
+
+#start:hover {
+	transform: scale(1.2);
+}
