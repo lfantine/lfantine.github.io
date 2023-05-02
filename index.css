@@ -133,7 +133,7 @@ a {
 	width: 90%;
 	height: 800px;
 	background-color: rgb(18, 17, 31);
-	display: flex;
+	/* display: flex; */
 	flex-direction: column;
 	gap: 70px;
 	transition: 0.2s;
@@ -143,10 +143,12 @@ a {
 }
 .other-pos {
 	opacity: 0;
+	display: none;
 }
 
 .abs{
 	opacity: 1;
+	display: flex;
 }
 
 #bg-menu {
