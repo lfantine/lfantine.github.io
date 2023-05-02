@@ -110,7 +110,7 @@ fetch(url)
 	document.getElementById('DAY').textContent = parseInt(date_heure.substring(8, 10));
 	document.getElementById('T-HOUR').textContent = make_dTime(parseInt(date_heure.substring(11, 13)));
 	document.getElementById('T-MIN').textContent = make_dTime(parseInt(date_heure.substring(14, 16)));
-	document.getElementById('WEATHER').src = "http:" + data.current.condition.icon;
+	document.getElementById('WEATHER').src = "https:" + data.current.condition.icon;
 	document.getElementById('WEATHER-TXT').textContent = data.current.condition.text;
 	document.getElementById('ISDAY').src = make_isday(data.current.is_day);
 	document.getElementById('WIND-TXT').textContent = data.current.wind_kph + "K/h";
