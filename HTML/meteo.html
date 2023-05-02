@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>tip calculator</title>
+		<link rel="stylesheet" href="../CSS/meteo.css">
+		<link href="https://fonts.googleapis.com/css?family=Sigmar:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Teko:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lobster:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Asap:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Kalam:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Rubik Iso:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Oxygen:400,700,800" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Arvo:400,700,800" rel="stylesheet">
+	</head>
+	<body>
+		<header>
+			<div class="bord">
+				<div class="back" id="bbut" onclick="back()"><span id="bk">Back</span></div>
+			</div>
+		</header>
+		<section id="panel">
+			<div id="search">
+				<label for="srch-but">Rechercher une ville : <input id="srch-but" placeholder="Nice" type="text" min="3"></label>
+				<div id="sub"><input id="send" type="submit" value="CHERCHER" onclick="search()"></div>
+				<div></div>
+			</div>
+			<section id="location" class="case">
+				<h3 class="case-title">location :</h3>
+				<div id="locat-info">
+					<div class="info">Pays : <label id="PAYS"  class="r-info"><label></div>
+					<div class="info">Region : <label id="REGION"  class="r-info"><label></div>
+					<div class="info">Ville : <label id="VILLE" class="r-info"><label></div>
+					<div class="info">Fuseau horaire : <label id="HEURE" class="r-info"><label></div>
+					<div class="o-info">
+						<div id="date">
+							<div id="date-year"><label id="YEAR"><label></div>
+							<div id="date-content">
+								<div id="date-month"><label id="MONTH" ><label></div>
+								<div id="date-day"><label id="DAY"><label></div>
+							</div>
+						</div>
+						<div id="time">
+							<div id="time-content">
+								<div id="time-in"><label id="T-HOUR"></label>h<label id="T-MIN"><label></label></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="condition" class="case">
+				<h3 class="case-title">condition :</h3>
+				
+			</section>
+			<div class="spacer"></div>
+		</section>
+		</section>
+		<script type="text/javascript" src="../JS/meteo.js"></script>
+	</body>
+</html>
+
