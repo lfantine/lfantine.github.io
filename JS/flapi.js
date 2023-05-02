@@ -71,11 +71,11 @@ window.onload = () => {
 
 	// load image
 	birdimage = new Image();
-	birdimage.src = "../CONTENT/flappy-bird/flappybird.png";
+	birdimage.src = "../CONTENT/flappybird.png";
 	TopPipeImg = new Image();
-	TopPipeImg.src = "../CONTENT/flappy-bird/toppipe.png";
+	TopPipeImg.src = "../CONTENT/toppipe.png";
 	BotPipeImg = new Image();
-	BotPipeImg.src = "../CONTENT/flappy-bird/bottompipe.png";
+	BotPipeImg.src = "../CONTENT/bottompipe.png";
 	birdimage.onload = () => {
 		context.drawImage(birdimage, birdX, birdY, birdwidth, birdHeight)
 	}
