@@ -90,18 +90,22 @@ function launch_game(){
 	context.font="45px sans-serif";
 	context.fillText("press space", boardwidth/5, boardheight/2);
 	document.addEventListener("keydown", starting);
+	document.addEventListener("click", startingCl);
 }
 
 function start_game(){
 	document.removeEventListener("keydown", starting);
+	document.removeEventListener("click", startingCl);
 	requestId = requestAnimationFrame(update);
 	interval = setInterval(placesPipes, 1500); // every 1.5s
 	document.addEventListener("keydown", movebird);
+	document.addEventListener("click", movebirdCl);
 	gameOver = false;
 }
 
 function restart(){
 	document.removeEventListener("keydown", movebird);
+	document.removeEventListener("click", movebirdCl);
 	while (pipeArray.length > 0)
 	{
 		pipeArray.shift();
@@ -116,9 +120,13 @@ function restart(){
 }
 
 function starting(e){
-	if (e.code == "Space" || e.code == "ArrowUp" || e.code == "button"){
+	if (e.code == "Space" || e.code == "ArrowUp"){
 		start_game();
 	}
+}
+
+function startingCl(){
+	start_game();
 }
 
 function update(){
@@ -205,12 +213,15 @@ function placesPipes() {
 }
 
 function movebird(e){
-	if (e.code == "Space" || e.code == "ArrowUp" || e.code == "button")
+	if (e.code == "Space" || e.code == "ArrowUp")
 	{
 		// JUMP
 		velocityY = -jump_force;
 	}
-	console.log("move");
+}
+
+function movebirdCl(){
+	velocityY = -jump_force;
 }
 
 function detectCollision(a, b){
