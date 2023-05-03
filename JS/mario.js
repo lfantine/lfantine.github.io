@@ -34,9 +34,6 @@ let param = {
 	fpsInterval: 0,
 	game_status: 0,
 	ON: true,
-	time_last: 0,
-	time_now: 0,
-	dt: 0
 }
 
 let Lobby = {
@@ -81,6 +78,10 @@ let Lobby = {
 		x: 535,
 		y: 345
 	},
+	w_ttl: new Image(),
+	s_ttl: new Image(),
+	r_ttl: new Image(),
+	p_ttl: new Image()
 }
 
 //SOUND
@@ -107,6 +108,10 @@ function load_Image(){
 	Lobby.player.f_7.src = "../Ct-mario/lobby_player_anim/player_lobby_f_7.png";
 	Lobby.player.f_8.src = "../Ct-mario/lobby_player_anim/player_lobby_f_8.png";
 	Lobby.player.f_9.src = "../Ct-mario/lobby_player_anim/player_lobby_f_9.png";
+	Lobby.w_ttl.src = "../Ct-mario/water_title.png";
+	Lobby.p_ttl.src = "../Ct-mario/plain_title.png";
+	Lobby.s_ttl.src = "../Ct-mario/sand_title.png";
+	Lobby.r_ttl.src = "../Ct-mario/rock_title.png";
 }
 
 function launch_game() {
@@ -163,28 +168,18 @@ function game(){
 
 	canva.clearRect(0, 0, board.width, board.height);
 	// Go in paint
+	if (param.game_status == -1){
+		// Leave
+		document.getElementById('start').classList.remove('no');
+		board.obj.classList.add('no');
+	}
 	if (param.game_status == 0){
 		Lobby.last_time = Date.now();
 		lobby_menu();
 	}
-	if (param.game_status == 1){
-		other_menu();
-	}
-
-	// // loop
-	// if (param.ON){
-	// 	requestAnimationFrame(game);
-	// }
 }
 
 // ========= Time function ========
-
-function Dt(){
-	param.time_last
-	pa = Date.now;
-	param.dt = param.time_last - time_now;
-
-}
 
 // ======= LOBBY PANEL =======
 
@@ -200,6 +195,19 @@ function lobby_menu(){
 	// PLAY MUSIC
 	music.lobby.play();
 
+	//draw level repere
+	if (Lobby.player.x == Lobby.water_lvl.x && Lobby.player.y == Lobby.water_lvl.y){
+		canva.drawImage(Lobby.w_ttl, 25, 70, 70, 40);
+	}
+	else if (Lobby.player.x == Lobby.plain_lvl.x && Lobby.player.y == Lobby.plain_lvl.y){
+		canva.drawImage(Lobby.p_ttl, 510, 80, 70, 40);
+	}
+	else if (Lobby.player.x == Lobby.sand_lvl.x && Lobby.player.y == Lobby.sand_lvl.y){
+		canva.drawImage(Lobby.s_ttl, 270, 80, 70, 40);
+	}
+	else if (Lobby.player.x == Lobby.rock_lvl.x && Lobby.player.y == Lobby.rock_lvl.y){
+		canva.drawImage(Lobby.r_ttl, 510, 400, 70, 40);
+	}
 
 	// There you need to draw the actual version of image
 	lobby_drawPlayer();
@@ -222,7 +230,7 @@ function lobby_menu(){
 		if(Lobby.player.mov == 0){
 			Lobby.player.y = Math.round(Lobby.player.y * 100) / 100;
 			Lobby.player.x = Math.round(Lobby.player.x * 100) / 100;
-			console.log("Plauer x: " + Lobby.player.x + " y: " + Lobby.player.y);
+			console.log("Player x: " + Lobby.player.x + " y: " + Lobby.player.y);
 		}
 	}
 
@@ -307,10 +315,9 @@ function lobby_drawPlayer()
 	}
 }
 function lobby_event(e){
-	if (e.code == "Space")
+	if (e.code == "Escape")
 	{
-		param.game_status = 1;
-		console.log("Space");
+		param.game_status = -1;
 	}
 	else if (e.code == "ArrowUp")
 	{
@@ -339,6 +346,9 @@ function lobby_event(e){
 		Lobby.player.mov = (param.fps / 2);
 		Lobby.player.x_dir = (Lobby.rock_lvl.x - Lobby.player.x) / (param.fps / 2);
 		Lobby.player.y_dir = (Lobby.rock_lvl.y - Lobby.player.y) / (param.fps / 2);
+	}
+	else if (e.code == "Enter" || e.code == "Space"){
+
 	}
 	console.log(e.code);
 }
