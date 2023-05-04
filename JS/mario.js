@@ -35,6 +35,7 @@ let param = {
 	game_status: 0,
 	ON: true,
 	img_loading: new Image(),
+	img_GameO: new Image(),
 }
 
 let Lobby = {
@@ -134,18 +135,27 @@ let player = {
 	is_ground: false,
 	is_jump: false,
 	jump_force: 10,
+	checkpoint: {
+		x: 0,
+		y: 0,
+		x_off: 0,
+	},
+	live: 3,
+	die: false,
+	dead: false,
 }
 
 class lvl_obj{
 	name;
 	img;
+	o_x;
 	x;
 	y;
 	H;
 	W;
 	constructor(src, x, y, H, W, name) {
 		this.name = name;
-		this.x = x,
+		this.o_x = x,
 		this.y = y;
 		this.H = H;
 		this.W = W;
@@ -159,6 +169,7 @@ let LVL = {
 	frame: 0,
 	last_time: 0,
 	t_inter: 0,
+	x_offset: 0,
 	Map: [],
 	Props: [],
 	BG: {
@@ -177,6 +188,7 @@ let sound = {
 	gameOver: new Audio("../Ct-mario/sound/game-over.wav"),
 	piece: new Audio("../Ct-mario/sound/piece.wav"),
 	complet: new Audio("../Ct-mario/stage-clear.mp3"),
+	degat: new Audio("../Ct-mario/sound/mamamia.mp3"),
 }
 
 let music = {
@@ -217,6 +229,7 @@ function load_Image(){
 	player.img.idle.right.src = "../Ct-mario/player/idle-right.png"
 	player.img.idle.left.src = "../Ct-mario/player/idle-left.png"
 	param.img_loading.src = "../Ct-mario/Loading.png";
+	param.img_GameO.src = "../Ct-mario/Level/GameOver.png";
 }
 
 function launch_game() {
@@ -226,6 +239,8 @@ function launch_game() {
 	board.obj.height = board.height;
 	sound.piece.volume = 0.2;
 	sound.piece.play();
+	sound.degat.volume = 0.6;
+	sound.degat.playbackRate = 1.75;
 	canva = board.obj.getContext("2d")
 	board.titleImg.src = "../Ct-mario/TitleScreen.png";
 	board.titleImg.onload = () => {
@@ -267,7 +282,6 @@ function start_game(){
 function game(){
 	canva.clearRect(0, 0, board.width, board.height);
 	// reset LVL stat;
-	reset_lvl();
 	// Go in paint
 	if (param.game_status == -1){
 		// Leave
@@ -278,11 +292,28 @@ function game(){
 		Lobby.last_time = Date.now();
 		lobby_menu();
 	}
+	reset_lvl();
+	if (param.game_status == 4)
+	{
+		// GameOver
+		GameOver_menu();
+	}
 	if (param.game_status == 1)
 	{
 		LVL.last_time = Date.now();
 		load_plain();
 	}
+}
+
+// ======= GameOver PANEL =======
+
+function GameOver_menu() {
+	canva.clearRect(0, 0, board.width, board.height);
+	canva.drawImage(param.img_GameO, 0, 0, 640, 480);
+	sleep(1500).then(() => {
+		param.game_status = 0;
+		requestAnimationFrame(game);
+	});
 }
 
 // ======= LOBBY PANEL =======
@@ -476,10 +507,15 @@ function load_plain(){
 	canva.drawImage(param.img_loading, 0, 0, 640, 480);
 	LVL.BG.bg.src = "../Ct-mario/Level/plain-bg.png";
 	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 0, 400, 100, 600, "sol"));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 600, 400, 100, 600, "sol"));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 300, 200, 100, 600, "sol"));
 	// console.table(player.gravity);
 	player.x = 20;
 	player.x_onmap = player.x;
 	player.y = 200;
+	player.checkpoint.x = player.x;
+	player.checkpoint.y = player.y;
+	player.live = 3;
 	sleep(1500).then(() => {
 		music.plain.loop = true;
 		music.plain.volume = 0.5;
@@ -497,7 +533,7 @@ function PLAIN(){
 	// clear the canva
 	canva.clearRect(0, 0, board.width, board.height);
 	// DRAW EVERYTHING
-	canva.drawImage(LVL.BG.bg, LVL.BG.x, LVL.BG.y, LVL.BG.bg_W, LVL.BG.bg_H); // Background
+	canva.drawImage(LVL.BG.bg, LVL.BG.x + LVL.x_offset, LVL.BG.y, LVL.BG.bg_W, LVL.BG.bg_H); // Background
 	draw_all();	// Map + Props
 	draw_player(); // Player
 
@@ -514,8 +550,6 @@ function PLAIN(){
 	else
 		player.state = 0;
 
-
-
 	// FPS CALC
 	LVL.t_inter = Date.now() - LVL.last_time;
 	if (LVL.t_inter < param.fpsInterval)
@@ -531,17 +565,20 @@ function PLAIN(){
 	player.gravity += 0.5;
 	player.gravity = Math.min(player.gravity, 10);
 
-	apply_player_gravity();
-	apply_player_move();
-
-
+	if (!player.die && !player.dead)
+	{
+		apply_player_gravity();
+		apply_player_move();
+		animate();
+		check_death();
+	}
 
 	plain_loop();
 }
 function draw_all(){
 	for (let i = 0; i < LVL.Map.length; i++)
 	{
-		// console.table(LVL.Map[i]);
+		LVL.Map[i].x = LVL.Map[i].o_x + LVL.x_offset;
 		canva.drawImage(LVL.Map[i].img, LVL.Map[i].x, LVL.Map[i].y, LVL.Map[i].W, LVL.Map[i].H);
 	}
 }
@@ -656,7 +693,7 @@ function apply_player_gravity(){
 				for (simul.y; simul.y <= player.y; simul.y++)
 				{
 					if (!detectCollision(LVL.Map[i], simul)){
-						// player.gravity = 1;
+						player.gravity = 1;
 						player.y = simul.y++;
 						return ;
 					}
@@ -682,6 +719,7 @@ function apply_player_move(){
 		else
 			player.last_dir = 'l';
 	}
+
 	let simul = {
 		x: player.x + (dir * player.speed),
 		y: player.y,
@@ -697,6 +735,11 @@ function apply_player_move(){
 				for (simul.x; simul.x >= player.x; simul.x--)
 				{
 					if (!detectCollision(LVL.Map[i], simul)){
+						if (player.x > 340 && LVL.x_offset > -2000)
+						{
+							LVL.x_offset = Math.max(LVL.x_offset -= (simul.x - player.x), -2000);
+							return ;
+						}
 						player.x = simul.x; 
 						return ;
 					}
@@ -707,6 +750,11 @@ function apply_player_move(){
 				for (simul.x; simul.x <= player.x; simul.x++)
 				{
 					if (!detectCollision(LVL.Map[i], simul)){
+						if (player.x < 240 && LVL.x_offset < 0)
+						{
+							LVL.x_offset = Math.min(LVL.x_offset += (player.x - simul.x), 0);
+							return ;
+						}
 						player.x = simul.x++;
 						return ;
 					}
@@ -715,7 +763,24 @@ function apply_player_move(){
 			return ;
 		}
 	}
-	player.x += (dir * player.speed);
+	if (player.x > 340 && LVL.x_offset > -2000 && dir == 1)
+	{
+		LVL.x_offset = Math.max(LVL.x_offset -= player.speed, -2000);
+		return ;
+	}
+	else if (player.x < 240 && LVL.x_offset < 0 && dir == -1)
+	{
+		LVL.x_offset = Math.min(LVL.x_offset += player.speed, 0);
+		return ;
+	}
+	else
+		player.x += (dir * player.speed);
+}
+
+function check_death(){
+	if (player.y >= 450){
+		player_die();
+	}
 }
 
 function animate(){
@@ -723,6 +788,30 @@ function animate(){
 	{
 		player.img.move.f_nb = parseInt(LVL.frame / 10) % 3;
 	}
+}
+
+function player_die(){
+	sound.degat.play();
+	player.live--;
+	player.die = true;
+	sleep(1500).then(() => {
+		if (player.live <= 0)
+		{
+			player.dead = true;
+			param.game_status = 4;
+		}
+		else
+		{
+			player.x = player.checkpoint.x;
+			player.y = player.checkpoint.y;
+			LVL.x_offset = player.checkpoint.x_off;
+			player.die = false;
+		}
+	});
+}
+
+function come_back(){
+
 }
 
 function level_event_down(e){
@@ -746,6 +835,18 @@ function level_event_down(e){
 	// if (e.code == "ArrowDown" || e.code == "KeyS"){
 	// 	// Down
 	// }
+	if (e.code == "Escape"){
+		// Left
+		player_die();
+	}
+	if (e.code == "KeyO"){
+		// Left
+		LVL.x_offset += 10;
+	}
+	if (e.code == "KeyI"){
+		// Left
+		LVL.x_offset -= 10;
+	}
 }
 
 function level_event_up(e){
@@ -787,6 +888,15 @@ function reset_lvl(){
 	{
 		LVL.Props.shift();
 	}
+	player.checkpoint.x = 0;
+	player.checkpoint.y = 0;
+	player.live = 3;
+	player.die = false;
+	player.dead = false;
+	player.mov_l = 0;
+	player.mov_r = 0;
+	player.is_mov = false;
+	LVL.x_offset = 0;
 }
 
 function detectCollision(a, b){
