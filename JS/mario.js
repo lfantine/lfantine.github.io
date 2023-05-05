@@ -3,8 +3,6 @@ function sleep (time) {
 	return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-
-
 // format <span class="games">1 : you made 5 !</span>
 
 function back(){
@@ -15,9 +13,7 @@ function back(){
 	});
 }
 
-
 // ============== MARIO ============//
-
 
 // BOARD
 let canva;
@@ -153,17 +149,21 @@ class lvl_obj{
 	y;
 	H;
 	W;
-	constructor(src, x, y, H, W, name) {
+	f_nb;
+	couch;
+	constructor(src, x, y, H, W, name, couch) {
 		this.name = name;
 		this.o_x = x,
+		this.x = x;
 		this.y = y;
 		this.H = H;
 		this.W = W;
 		this.img = new Image();
 		this.img.src = src;
+		this.f_nb = 0;
+		this.couch = couch;
 	}
 }
-
 
 let LVL = {
 	frame: 0,
@@ -172,14 +172,18 @@ let LVL = {
 	x_offset: 0,
 	Map: [],
 	Props: [],
+	enemy: [],
 	BG: {
 		bg: new Image(),
-		bg_W: 3840,
+		heart: new Image(),
+		bg_W: 6500,
 		bg_H: 480,
 		x: 0,
 		y: 0,
 	},
 	frame: 0,
+	win: false,
+	anim_win: false,
 }
 
 //SOUND
@@ -187,8 +191,11 @@ let sound = {
 	oneUp: new Audio("../Ct-mario/sound/1-up.wav"),
 	gameOver: new Audio("../Ct-mario/sound/game-over.wav"),
 	piece: new Audio("../Ct-mario/sound/piece.wav"),
-	complet: new Audio("../Ct-mario/stage-clear.mp3"),
+	complet: new Audio("../Ct-mario/sound/complet.wav"),
 	degat: new Audio("../Ct-mario/sound/mamamia.mp3"),
+	checkpoint: new Audio("../Ct-mario/sound/checkpoint.wav"),
+	jump: new Audio("../Ct-mario/sound/saut.wav"),
+	break: new Audio("../Ct-mario/sound/break.mp3"),
 }
 
 let music = {
@@ -230,6 +237,7 @@ function load_Image(){
 	player.img.idle.left.src = "../Ct-mario/player/idle-left.png"
 	param.img_loading.src = "../Ct-mario/Loading.png";
 	param.img_GameO.src = "../Ct-mario/Level/GameOver.png";
+	LVL.BG.heart.src = "../Ct-mario/map-elem/heart.png";
 }
 
 function launch_game() {
@@ -250,6 +258,10 @@ function launch_game() {
 	param.fps = 60;
 	param.fpsInterval = 1000/param.fps;
 	param.game_status = 0;
+	sound.complet.volume = 0.3;
+	sound.jump.volume = 0.15;
+	sound.jump.playbackRate = 1.5;
+	sound.break.playbackRate = 1.5;
 	sleep(1500).then(() => {
 		start_game();
 	});
@@ -298,6 +310,11 @@ function game(){
 		// GameOver
 		GameOver_menu();
 	}
+	if (param.game_status == 5)
+	{
+		// WIN
+		Win_menu();
+	}
 	if (param.game_status == 1)
 	{
 		LVL.last_time = Date.now();
@@ -310,6 +327,15 @@ function game(){
 function GameOver_menu() {
 	canva.clearRect(0, 0, board.width, board.height);
 	canva.drawImage(param.img_GameO, 0, 0, 640, 480);
+	sleep(1500).then(() => {
+		param.game_status = 0;
+		requestAnimationFrame(game);
+	});
+}
+
+function Win_menu() {
+	canva.clearRect(0, 0, board.width, board.height);
+	canva.drawImage(param.img_loading, 0, 0, 640, 480);
 	sleep(1500).then(() => {
 		param.game_status = 0;
 		requestAnimationFrame(game);
@@ -505,11 +531,197 @@ function lobby_event(e){
 
 function load_plain(){
 	canva.drawImage(param.img_loading, 0, 0, 640, 480);
+
+	// LEVEL DESIGN
 	LVL.BG.bg.src = "../Ct-mario/Level/plain-bg.png";
-	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 0, 400, 100, 600, "sol"));
-	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 600, 400, 100, 600, "sol"));
-	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 300, 200, 100, 600, "sol"));
-	// console.table(player.gravity);
+
+	// FLoor ====
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 0, 400, 100, 600, "sol 1", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 1200, 400, 100, 600, "sol", 1));
+		LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 1500, 350, 100, 600, "sol", 0));
+		LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 1500, 300, 100, 600, "sol", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 1800, 400, 100, 600, "sol", 1));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 3600, 400, 100, 600, "sol", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 4200, 400, 100, 600, "sol", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 5400, 400, 100, 600, "sol", 0));
+	// =============
+
+	// EWD ==== 
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/sol_1.png", 6000, 400, 100, 600, "sol", 0));
+	LVL.Props.push(new lvl_obj("../Ct-mario/map-elem/win-flag.png", 6300, 100, 300, 93, "w-flag", 0));
+	// =====
+
+	// Design
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 200, 250, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 232, 250, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 264, 250, 32, 32, "block", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 280, 325, 32, 32, "gumba_v1", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 400, 325, 150, 50, "pipe", 1));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 900, 350, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 932, 350, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 964, 350, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 1200, 325, 150, 50, "pipe", 2));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 1200, 325, 75, 50, "plant", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 1400, 300, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 1468, 325, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 1550, 225, 150, 50, "pipe", 2));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 1550, 225, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 2000, 225, 150, 50, "pipe", 2));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 2000, 225, 75, 50, "plant", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 1900, 200, 32, 32, "gumba_v1", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 1700, 200, 32, 32, "gumba_v1", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 1750, 200, 32, 32, "gumba_v1", 0));
+
+	LVL.Props.push(new lvl_obj("../Ct-mario/map-elem/check-flag1.png", 2300, 300, 100, 50, "c-flag", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2500, 325, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2532, 325, 32, 32, "block", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 2632, 275, 32, 32, "spike", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2732, 325, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2764, 325, 32, 32, "block", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 2864, 275, 32, 32, "spike", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2964, 325, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 2996, 325, 32, 32, "block", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3064, 275, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3064, 307, 32, 32, "spike", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 3150, 420, 32, 32, "block", 0));
+
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3200, 132, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3200, 164, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3200, 196, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3200, 228, 32, 32, "spike", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 3450, 388, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 3482, 388, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 3514, 388, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 3546, 350, 150, 50, "pipe", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 3546, 350, 75, 50, "plant", 0));
+
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3600, 368, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3600, 336, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3732, 368, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3732, 336, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3864, 368, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3864, 336, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3996, 388, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3996, 356, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 3996, 324, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 3600, 300, 32, 32, "gumba_v1", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 3700, 300, 32, 32, "gumba_v1", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 3800, 300, 32, 32, "gumba_v1", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4150, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4150, 350, 75, 50, "plant", 0));
+
+	LVL.Props.push(new lvl_obj("../Ct-mario/map-elem/check-flag1.png", 4350, 300, 100, 50, "c-flag", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4550, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4550, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4600, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4600, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4650, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4650, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4700, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4700, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4750, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4750, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4800, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4800, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4850, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4850, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 4850, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 4850, 350, 75, 50, "plant", 0));
+
+
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 356, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 324, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 292, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 260, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 228, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 196, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 164, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 132, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 100, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 68, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5000, 36, 32, 32, "spike", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 4900, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 4932, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 4964, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 4996, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5028, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5060, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5092, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5124, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5156, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5188, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5220, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5252, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5284, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5316, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5348, 460, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5380, 460, 32, 32, "block", 2));
+
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 420, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 388, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 356, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 324, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 292, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 260, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 228, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 196, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 164, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 132, 32, 32, "spike", 0));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 5400, 100, 32, 32, "spike", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5360, 380, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5328, 380, 32, 32, "block", 2));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5060, 330, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5092, 330, 32, 32, "block", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5360, 250, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5328, 250, 32, 32, "block", 2));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5060, 180, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5092, 180, 32, 32, "block", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5360, 130, 32, 32, "block", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 5328, 130, 32, 32, "block", 2));
+
+	LVL.Props.push(new lvl_obj("../Ct-mario/map-elem/check-flag1.png", 5600, 300, 100, 50, "c-flag", 0));
+
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5700, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5700, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5750, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5750, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5800, 350, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5800, 350, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5850, 300, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5850, 300, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5900, 300, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5900, 300, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 5950, 300, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 5950, 300, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 6000, 300, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 6000, 300, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 6050, 250, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 6050, 250, 75, 50, "plant", 0));
+	LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 6100, 250, 150, 50, "pipe", 1));
+	LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 6100, 250, 75, 50, "plant", 0));
+	// =========
+
+	// LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/pipe1.png", 500, 300, 150, 50, "pipe", 1));
+	// LVL.enemy.push(new lvl_obj("../Ct-mario/map-elem/spikes1.png", 168, 370, 32, 32, "spike", 0));
+	// LVL.Props.push(new lvl_obj("../Ct-mario/map-elem/check-flag1.png", 1000, 300, 100, 50, "c-flag", 0));
+	// LVL.Map.push(new lvl_obj("../Ct-mario/map-elem/block.png", 1050, 250, 32, 32, "block", 0));
+	// LVL.enemy.push(new lvl_obj("../Ct-mario/gumba/gumba1.png", 800, 200, 32, 32, "gumba_v1", 0));
+	// LVL.enemy.push(new lvl_obj("../Ct-mario/plant/plant.png", 550, 300, 75, 50, "plant", 0));
+
 	player.x = 20;
 	player.x_onmap = player.x;
 	player.y = 200;
@@ -533,7 +745,6 @@ function PLAIN(){
 	// clear the canva
 	canva.clearRect(0, 0, board.width, board.height);
 	// DRAW EVERYTHING
-	canva.drawImage(LVL.BG.bg, LVL.BG.x + LVL.x_offset, LVL.BG.y, LVL.BG.bg_W, LVL.BG.bg_H); // Background
 	draw_all();	// Map + Props
 	draw_player(); // Player
 
@@ -549,7 +760,6 @@ function PLAIN(){
 	}
 	else
 		player.state = 0;
-
 	// FPS CALC
 	LVL.t_inter = Date.now() - LVL.last_time;
 	if (LVL.t_inter < param.fpsInterval)
@@ -565,21 +775,72 @@ function PLAIN(){
 	player.gravity += 0.5;
 	player.gravity = Math.min(player.gravity, 10);
 
-	if (!player.die && !player.dead)
+	
+	if (!player.die && !player.dead && !LVL.win)
 	{
 		apply_player_gravity();
 		apply_player_move();
 		animate();
+		check_props();
 		check_death();
 	}
-
+	
+	if (LVL.win)
+	{
+		if (player.anim_win){
+			level_win();
+		}
+		animate();
+		apply_player_gravity();
+	}
+	
+	animate_enemy();
+		
 	plain_loop();
 }
 function draw_all(){
+	canva.drawImage(LVL.BG.bg, LVL.BG.x + LVL.x_offset, LVL.BG.y, LVL.BG.bg_W, LVL.BG.bg_H); // Background
+	if (player.live >= 1)
+		canva.drawImage(LVL.BG.heart, 10, 10, 32, 32);
+	if (player.live >= 2)
+		canva.drawImage(LVL.BG.heart, 42, 10, 32, 32);
+	if (player.live >= 3)
+		canva.drawImage(LVL.BG.heart, 74, 10, 32, 32);
+	for (let i = 0; i < LVL.enemy.length; i++)
+	{
+		LVL.enemy[i].x = LVL.enemy[i].o_x + LVL.x_offset;
+		canva.drawImage(LVL.enemy[i].img, LVL.enemy[i].x, LVL.enemy[i].y, LVL.enemy[i].W, LVL.enemy[i].H);
+	}
+	// ======== MAP ======
 	for (let i = 0; i < LVL.Map.length; i++)
 	{
-		LVL.Map[i].x = LVL.Map[i].o_x + LVL.x_offset;
-		canva.drawImage(LVL.Map[i].img, LVL.Map[i].x, LVL.Map[i].y, LVL.Map[i].W, LVL.Map[i].H);
+		if (LVL.Map[i].couch == 2)
+		{
+			LVL.Map[i].x = LVL.Map[i].o_x + LVL.x_offset;
+			canva.drawImage(LVL.Map[i].img, LVL.Map[i].x, LVL.Map[i].y, LVL.Map[i].W, LVL.Map[i].H);
+		}
+	}
+	for (let i = 0; i < LVL.Map.length; i++)
+	{
+		if (LVL.Map[i].couch == 1)
+		{
+			LVL.Map[i].x = LVL.Map[i].o_x + LVL.x_offset;
+			canva.drawImage(LVL.Map[i].img, LVL.Map[i].x, LVL.Map[i].y, LVL.Map[i].W, LVL.Map[i].H);
+		}
+	}
+	for (let i = 0; i < LVL.Map.length; i++)
+	{
+		if (LVL.Map[i].couch == 0)
+		{
+			LVL.Map[i].x = LVL.Map[i].o_x + LVL.x_offset;
+			canva.drawImage(LVL.Map[i].img, LVL.Map[i].x, LVL.Map[i].y, LVL.Map[i].W, LVL.Map[i].H);
+		}
+	}
+	// ==== props
+	for (let i = 0; i < LVL.Props.length; i++)
+	{
+		LVL.Props[i].x = LVL.Props[i].o_x + LVL.x_offset;
+		canva.drawImage(LVL.Props[i].img, LVL.Props[i].x, LVL.Props[i].y, LVL.Props[i].W, LVL.Props[i].H);
 	}
 }
 function draw_player(){
@@ -651,6 +912,9 @@ function plain_loop(){
 		player.y = 0;
 		player.img.jump.f_nb = 0;
 		player.img.move.f_nb = 0;
+		LVL.win = false;
+		player.anim_win = false;
+		LVL.x_offset = 0;
 		document.removeEventListener("keydown",level_event_down);
 		document.removeEventListener("keyup",level_event_up);
 		requestAnimationFrame(game);
@@ -695,6 +959,10 @@ function apply_player_gravity(){
 					if (!detectCollision(LVL.Map[i], simul)){
 						player.gravity = 1;
 						player.y = simul.y++;
+						if (LVL.Map[i].name == "block"){
+							sound.break.play();
+							delete LVL.Map.splice(i,1);
+						}
 						return ;
 					}
 				}
@@ -706,6 +974,30 @@ function apply_player_gravity(){
 	player.y += player.gravity;
 }
 
+function apply_gravity(o){
+	let simul = {
+		x: o.x,
+		y: o.y + 5,
+		H: o.H,
+		W: o.W,
+	}
+	for (let i = 0; i < LVL.Map.length; i++)
+	{
+		if (detectCollision(LVL.Map[i], simul))
+		{
+			for (simul.y; simul.y >= o.y; simul.y--)
+			{
+				if (!detectCollision(LVL.Map[i], simul)){
+					o.is_ground = true;
+					o.is_jump = false;
+					o.y = simul.y; 
+					return ;
+				}
+			}
+		}
+	}
+	o.y += 5;
+}
 function apply_player_move(){
 	let dir = player.mov_r - player.mov_l;
 	if (dir == 0){
@@ -735,9 +1027,9 @@ function apply_player_move(){
 				for (simul.x; simul.x >= player.x; simul.x--)
 				{
 					if (!detectCollision(LVL.Map[i], simul)){
-						if (player.x > 340 && LVL.x_offset > -2000)
+						if (player.x > 340 && LVL.x_offset > -5800)
 						{
-							LVL.x_offset = Math.max(LVL.x_offset -= (simul.x - player.x), -2000);
+							LVL.x_offset = Math.max(LVL.x_offset -= (simul.x - player.x), -5800);
 							return ;
 						}
 						player.x = simul.x; 
@@ -755,7 +1047,7 @@ function apply_player_move(){
 							LVL.x_offset = Math.min(LVL.x_offset += (player.x - simul.x), 0);
 							return ;
 						}
-						player.x = simul.x++;
+						player.x = simul.x;
 						return ;
 					}
 				}
@@ -763,9 +1055,9 @@ function apply_player_move(){
 			return ;
 		}
 	}
-	if (player.x > 340 && LVL.x_offset > -2000 && dir == 1)
+	if (player.x > 340 && LVL.x_offset > -5800 && dir == 1)
 	{
-		LVL.x_offset = Math.max(LVL.x_offset -= player.speed, -2000);
+		LVL.x_offset = Math.max(LVL.x_offset -= player.speed, -5800);
 		return ;
 	}
 	else if (player.x < 240 && LVL.x_offset < 0 && dir == -1)
@@ -776,10 +1068,127 @@ function apply_player_move(){
 	else
 		player.x += (dir * player.speed);
 }
+function apply_move(o, dir, speed){
+	let simul = {
+		x: o.o_x + (dir * speed),
+		y: o.y,
+		H: o.H,
+		W: o.W,
+	}
+	for (let i = 0; i < LVL.Map.length; i++)
+	{
+		let simur = {
+			x: LVL.Map[i].o_x,
+			y: LVL.Map[i].y,
+			H: LVL.Map[i].H,
+			W: LVL.Map[i].W,
+		}
+		if (detectCollision(simur, simul))
+		{
+			if (dir == 1)
+			{
+				for (simul.x; simul.x >= o.o_x; simul.x--)
+				{
+					if (!detectCollision(simur, simul)){
+						o.o_x = simul.x;
+						return ;
+					}
+				}
+				return ;
+			}
+			else if (dir == -1)
+			{
+				for (simul.x; simul.x <= o.x; simul.x++)
+				{
+					if (!detectCollision(simur, simul)){
+						o.o_x = simul.x;
+						return ;
+					}
+				}
+				return ;
+			}
+			return ;
+		}
+	}
+	o.o_x = simul.x;
+}
 
 function check_death(){
 	if (player.y >= 450){
 		player_die();
+	}
+	for (let i = 0; i < LVL.enemy.length; i++)
+	{
+		if (detectCollision(player, LVL.enemy[i]))
+		{
+			if (LVL.enemy[i].name == "gumba_v1")
+			{
+				if (detectCollision_top(player, LVL.enemy[i]))
+				{
+					sound.piece.play();
+					player.gravity = -player.jump_force;
+					LVL.enemy[i].couch = -1;
+					LVL.enemy[i].img.src = "../Ct-mario/gumba/gumba3.png";
+					sleep(500).then(() => {
+						delete LVL.enemy.splice(i, 1);
+					});
+					return;
+				}
+				else
+				{
+					player_die();
+				}
+			}
+			else
+			{
+				player_die();
+			}
+			return ;
+		}
+	}
+}
+
+function check_props(){
+	for (let i = 0; i < LVL.Props.length; i++)
+	{
+		if (detectCollision(player, LVL.Props[i]))
+		{
+			Props_action(LVL.Props[i])
+			return ;
+		}
+	}
+}
+
+function Props_action(props){
+	if (props.name == "c-flag"){
+		props.name = "c-flag-use";
+		player.checkpoint.x = player.x;
+		player.checkpoint.y = player.y;
+		player.checkpoint.x_off = LVL.x_offset;
+		sound.checkpoint.play();
+		props.img.src = "../Ct-mario/map-elem/check-flag2.png";
+	}
+	if (props.name == "w-flag"){
+		props.name = "w-flag-use";
+		player.checkpoint.x = player.x;
+		player.checkpoint.y = player.y;
+		player.checkpoint.x_off = LVL.x_offset;
+		document.removeEventListener("keydown",level_event_down);
+		document.removeEventListener("keyup",level_event_up);
+		player.mov_l = 0;
+		player.mov_r = 0;
+		music.plain.pause();
+		sound.complet.play();
+		LVL.win = true;
+		props.img.src = "../Ct-mario/map-elem/win-flag2.png";
+		player.is_mov = 0;
+		sleep(5500).then(() => {
+			player.anim_win = true;
+			player.is_mov = true;
+			sleep(2500).then(() => {
+				param.game_status = 5;
+			});
+		});
 	}
 }
 
@@ -787,6 +1196,74 @@ function animate(){
 	if (player.state == 1)
 	{
 		player.img.move.f_nb = parseInt(LVL.frame / 10) % 3;
+	}
+}
+
+function animate_enemy(){
+	for (let i = 0; i < LVL.enemy.length; i++)
+	{
+		if (LVL.enemy[i].name == "plant"){
+			LVL.enemy[i].f_nb++;
+			if (LVL.enemy[i].f_nb > 0 && LVL.enemy[i].f_nb <= param.fps)
+			{
+				LVL.enemy[i].y--;
+			}
+			else if (LVL.enemy[i].f_nb > param.fps && LVL.enemy[i].f_nb <= param.fps * 3)
+			{
+			}
+			else if (LVL.enemy[i].f_nb > param.fps * 3 && LVL.enemy[i].f_nb <= param.fps * 4)
+			{
+				LVL.enemy[i].y++;
+			}
+			else if (LVL.enemy[i].f_nb > param.fps * 4 && LVL.enemy[i].f_nb <= param.fps * 7)
+			{
+				// comment
+			}
+			else
+			{
+				LVL.enemy[i].f_nb = 0;
+			}
+		}
+		else if (LVL.enemy[i].name == "gumba_v1"){
+			apply_gravity(LVL.enemy[i]);
+			LVL.enemy[i].f_nb++;
+
+			// apply_move
+			if (LVL.enemy[i].f_nb > 0 && LVL.enemy[i].f_nb <= param.fps * 3)
+			{
+				apply_move(LVL.enemy[i], 1, 1);
+				if (parseInt((LVL.enemy[i].f_nb / 10)) % 2 == 0 && LVL.enemy[i].couch != -1)
+					LVL.enemy[i].img.src = "../Ct-mario/gumba/gumba1.png";
+				else if (LVL.enemy[i].couch != -1)
+					LVL.enemy[i].img.src = "../Ct-mario/gumba/gumba2.png";
+			}
+			else if (LVL.enemy[i].f_nb > param.fps * 3 && LVL.enemy[i].f_nb <= param.fps * 4)
+			{
+				// test
+			}
+			else if (LVL.enemy[i].f_nb > param.fps * 4 && LVL.enemy[i].f_nb <= param.fps * 7)
+			{
+				apply_move(LVL.enemy[i], -1, 1);
+				if (parseInt((LVL.enemy[i].f_nb / 10)) % 2 == 0 && LVL.enemy[i].couch != -1)
+					LVL.enemy[i].img.src = "../Ct-mario/gumba/gumba1.png";
+				else if (LVL.enemy[i].couch != -1)
+					LVL.enemy[i].img.src = "../Ct-mario/gumba/gumba2.png";
+			}
+			else if (LVL.enemy[i].f_nb > param.fps * 7 && LVL.enemy[i].f_nb <= param.fps * 8)
+			{
+				//test
+			}
+			else
+			{
+				LVL.enemy[i].f_nb = 0;
+			}
+			// detect death
+			if (LVL.enemy[i].y >= 470)
+			{
+				delete LVL.enemy.splice(i, 1);
+				i--;
+			}
+		}
 	}
 }
 
@@ -810,8 +1287,10 @@ function player_die(){
 	});
 }
 
-function come_back(){
-
+function level_win(){
+	player.mov_r = 1;
+	player.state = 1;
+	player.x += player.speed;
 }
 
 function level_event_down(e){
@@ -828,6 +1307,7 @@ function level_event_down(e){
 		if (player.is_ground)
 		{
 			// console.log(e.code);
+			sound.jump.play();
 			player.gravity = -player.jump_force;
 			player.is_jump = true;
 		}
@@ -838,14 +1318,6 @@ function level_event_down(e){
 	if (e.code == "Escape"){
 		// Left
 		player_die();
-	}
-	if (e.code == "KeyO"){
-		// Left
-		LVL.x_offset += 10;
-	}
-	if (e.code == "KeyI"){
-		// Left
-		LVL.x_offset -= 10;
 	}
 }
 
@@ -866,18 +1338,6 @@ function level_event_up(e){
 	// }
 }
 
-function other_menu(){
-	canva.drawImage(board.titleImg, 0, 0, 640, 480);
-	// music.lobby.play();
-
-	console.log("other");
-
-	// loop
-	if (param.ON && param.game_status == 1){
-		requestAnimationFrame(other_menu);
-	}
-}
-
 function reset_lvl(){
 	LVL.BG.bg.src = '';
 	while(LVL.Map.length > 0)
@@ -888,8 +1348,13 @@ function reset_lvl(){
 	{
 		LVL.Props.shift();
 	}
+	while(LVL.enemy.length > 0)
+	{
+		LVL.enemy.shift();
+	}
 	player.checkpoint.x = 0;
 	player.checkpoint.y = 0;
+	player.checkpoint.x_off = 0;
 	player.live = 3;
 	player.die = false;
 	player.dead = false;
@@ -897,6 +1362,8 @@ function reset_lvl(){
 	player.mov_r = 0;
 	player.is_mov = false;
 	LVL.x_offset = 0;
+	LVL.win = false;
+	player.anim_win = false;
 }
 
 function detectCollision(a, b){
@@ -904,4 +1371,33 @@ function detectCollision(a, b){
 			a.x + a.W > b.x &&
 			a.y < b.y + b.H &&
 			a.y + a.H > b.y;
+}
+
+function detectCollision_top(p, b){
+
+	if (p.y < b.y && p.y + p.H > b.y /*Collide top*/ )
+	{	
+		if (p.x > b.x && p.x + p.W < b.x + b.W)
+			return true;
+		else if ((/*collide right*/ p.x < b.x && p.x + p.W > b.x) && (/*collide left*/ p.x + p.W > b.x + b.W && p.x < b.x + b.W))
+			return true
+		else if ((/*collide right*/ p.x < b.x && p.x + p.W > b.x) && !(/*collide left*/ p.x + p.W > b.x + b.W && p.x < b.x + b.W))
+		{
+			if (p.y + p.H - b.y <= 20)
+				return true;
+			else
+				return false;
+		}
+		else if (!(/*collide right*/ p.x < b.x && p.x + p.W > b.x) && (/*collide left*/ p.x + p.W > b.x + b.W && p.x < b.x + b.W))
+		{
+			if (p.y + p.H - b.y <= 20)
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	// else
+	return false;
 }
